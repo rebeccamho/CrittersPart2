@@ -1,5 +1,5 @@
 /* CRITTERS Critter.java
- * EE422C Project 4 submission by
+ * EE422C Project 5 submission by
  * Irene Kuang
  * IK2684
  * 16480

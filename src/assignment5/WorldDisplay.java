@@ -2,16 +2,19 @@ package assignment5;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class WorldDisplay extends Stage {
+	static GridPane grid = new GridPane();
 	Label x = new Label("Second stage");
-	VBox y = new VBox();
 	
 	WorldDisplay(){
-	    y.getChildren().add(x);
-	    this.setScene(new Scene(y, 300, 300));
+		grid.setGridLinesVisible(true);
+	    grid.getChildren().add(x);
+	    Scene scene = new Scene(grid, 500, 500);
+	    this.setScene(scene);
+	    
 	    this.show();
 	   }  
 }

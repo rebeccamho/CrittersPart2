@@ -14,6 +14,7 @@ package assignment5;
 
 //import java.awt.Font;
 import java.lang.String;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -52,8 +53,10 @@ public class Main extends Application {
 			grid.add(make, 0, 10);
 			
 			//grid.getChildren().addAll(welcome,make);
-			//new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
-			primaryStage.show();
+			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
+			//primaryStage.show();
+			worldStage.update();
+
 			
 			// Paints the icons.
 			//Painter.paint();
@@ -64,6 +67,19 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+        Critter.clearWorld(); // initialize the world map
+
+		try {
+			Critter.makeCritter("Craig");
+			Critter.makeCritter("Critter1");
+			Critter.makeCritter("Critter1");
+			Critter.makeCritter("Algae");
+		} catch(InvalidCritterException e) {
+			System.out.println("you fucked up");
+		}
+		Critter.displayWorld();
+
+
 		launch(args);
 	}
 }

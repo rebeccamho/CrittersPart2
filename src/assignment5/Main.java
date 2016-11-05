@@ -216,7 +216,7 @@ public class Main extends Application {
 	        grid.add(quitBtn, 10, 50);
 	        
 	        
-	        //primaryStage.show();
+	        primaryStage.show();
 	        
 		} catch(Exception e) {
 			e.printStackTrace();		
@@ -224,16 +224,16 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-        Critter.clearWorld(); // initialize the world map
-
-		try {
-			Critter.makeCritter("Craig");
-			Critter.makeCritter("Critter1");
-			Critter.makeCritter("Critter1");
-			Critter.makeCritter("Algae");
-		} catch(InvalidCritterException e) {
-			System.out.println("you fucked up");
-		}
+//        Critter.clearWorld(); // initialize the world map
+//
+//		try {
+//			Critter.makeCritter("Craig");
+//			Critter.makeCritter("Critter1");
+//			Critter.makeCritter("Critter1");
+//			Critter.makeCritter("Algae");
+//		} catch(InvalidCritterException e) {
+//			System.out.println("you fucked up");
+//		}
 
 		launch(args);
 	}

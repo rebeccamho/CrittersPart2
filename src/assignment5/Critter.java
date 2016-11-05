@@ -59,6 +59,29 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	
+	protected final String look(int direction, boolean steps) { 
+		int originalX = x_coord; 
+		int originalY = y_coord; 
+		
+		if(steps == false) {	// critter is going to walk (1 step)
+			walk(direction);
+		} else if(steps == true) {	// critter is going to run (2 steps)
+			run(direction); 
+		}
+		
+		int index = this.convertCoordToIndex(); 
+		
+		x_coord = originalX; 
+		y_coord = originalY; 
+		energy = energy - Params.look_energy_cost; 
+		
+		if(worldLists.get(index).size() != 0) {
+			return worldLists.get(index).get(0).toString();
+		} else {
+			return null; 
+		}
+	}
+	
 	/**
 	 * This method moves the critter one step in a specified direction and subtracts
 	 * from the critter's energy the cost of walking plus the cost of rest.

@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.*;
 
 public class Main extends Application {
 	static GridPane grid = new GridPane();
@@ -77,8 +78,6 @@ public class Main extends Application {
 		} catch(InvalidCritterException e) {
 			System.out.println("you fucked up");
 		}
-		Critter.displayWorld();
-
 
 		launch(args);
 	}

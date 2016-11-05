@@ -11,6 +11,10 @@
  */
 package assignment5;
 
+import javafx.scene.shape.*;
+import javafx.scene.paint.*;
+
+
 /*
  * to begin, Critter1 gets randomly assigned an initial direction
  * during doTimeStep, Critter1 has an equal and random chance of walking, running, and not moving; only reproduces if it has 5 times reproduce energy 
@@ -25,6 +29,19 @@ public class Critter1 extends Critter {
 	
 	public Critter1() {
 		dir = Critter.getRandomInt(8);
+	}
+	
+	public Shape viewShape(int colLen, int rowLen) {
+		Circle c = new Circle(Math.min(colLen,rowLen)/2);
+		return c;
+	}
+	
+	public Color viewOutlineColor() {
+		return Color.BLUE;
+	}
+	
+	public Color viewFillColor() {
+		return Color.AQUA;
 	}
 	
 	public boolean fight(String not_used) { 

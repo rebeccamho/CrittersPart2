@@ -14,6 +14,7 @@ package assignment5;
 
 //import java.awt.Font;
 import java.lang.String;
+
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.*;
 
 public class Main extends Application {
 	static GridPane grid = new GridPane();
@@ -144,6 +146,7 @@ public class Main extends Application {
 	        });
 	        grid.add(stepBtn, 1, 32);
 			
+<<<<<<< HEAD
 	        /** stats */
 	        Label stats = new Label("Show Statistics:");
 			grid.add(stats, 10, 30);
@@ -170,6 +173,13 @@ public class Main extends Application {
 	        Text wrongSeedInput = new Text("Invalid Number!");
 			wrongSeedInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongSeedInput.setFill(Color.RED);
+=======
+			//grid.getChildren().addAll(welcome,make);
+			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
+			//primaryStage.show();
+			worldStage.update();
+
+>>>>>>> irene
 			
 	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
@@ -214,6 +224,17 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+        Critter.clearWorld(); // initialize the world map
+
+		try {
+			Critter.makeCritter("Craig");
+			Critter.makeCritter("Critter1");
+			Critter.makeCritter("Critter1");
+			Critter.makeCritter("Algae");
+		} catch(InvalidCritterException e) {
+			System.out.println("you fucked up");
+		}
+
 		launch(args);
 	}
 }

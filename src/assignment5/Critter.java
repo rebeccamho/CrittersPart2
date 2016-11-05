@@ -14,6 +14,10 @@ package assignment5;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -25,7 +29,7 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
-	private static List<List<Critter>> worldLists = new ArrayList<List<Critter>>(Params.world_height*Params.world_width);
+	public static List<List<Critter>> worldLists = new ArrayList<List<Critter>>(Params.world_height*Params.world_width);
 	//private static int[][] worldCount = new int[Params.world_height][Params.world_width];
 	private static boolean worldInitialized = false;
 	private boolean movedThisTurn;
@@ -54,6 +58,29 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	
+	protected final String look(int direction, boolean steps) { 
+		int originalX = x_coord; 
+		int originalY = y_coord; 
+		
+		if(steps == false) {	// critter is going to walk (1 step)
+			walk(direction);
+		} else if(steps == true) {	// critter is going to run (2 steps)
+			run(direction); 
+		}
+		
+		int index = this.convertCoordToIndex(); 
+		
+		x_coord = originalX; 
+		y_coord = originalY; 
+		energy = energy - Params.look_energy_cost; 
+		
+		if(worldLists.get(index).size() != 0) {
+			return worldLists.get(index).get(0).toString();
+		} else {
+			return null; 
+		}
+	}
 	
 	/**
 	 * This method moves the critter one step in a specified direction and subtracts
@@ -313,6 +340,20 @@ public abstract class Critter {
 		} catch(InstantiationException | IllegalAccessException e1){
 			throw new InvalidCritterException(critter_class_name);
 		}
+	}
+	
+
+	public Shape viewShape(int colLen, int rowLen) {
+		Rectangle r = new Rectangle(colLen,rowLen);
+		return r;
+	}
+	
+	public Color viewOutlineColor() {
+		return Color.BEIGE;
+	}
+	
+	public Color viewFillColor() {
+		return Color.SIENNA;
 	}
 	
 	/**

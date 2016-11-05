@@ -146,7 +146,7 @@ public class Main extends Application {
 	        });
 	        grid.add(stepBtn, 1, 32);
 			
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	        /** stats */
 	        Label stats = new Label("Show Statistics:");
 			grid.add(stats, 10, 30);
@@ -173,13 +173,13 @@ public class Main extends Application {
 	        Text wrongSeedInput = new Text("Invalid Number!");
 			wrongSeedInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongSeedInput.setFill(Color.RED);
-=======
+//=======
 			//grid.getChildren().addAll(welcome,make);
 			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
-			//primaryStage.show();
+			primaryStage.show();
 			worldStage.update();
 
->>>>>>> irene
+//>>>>>>> irene
 			
 	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
@@ -216,7 +216,7 @@ public class Main extends Application {
 	        grid.add(quitBtn, 10, 50);
 	        
 	        
-	        primaryStage.show();
+	        //primaryStage.show();
 	        
 		} catch(Exception e) {
 			e.printStackTrace();		

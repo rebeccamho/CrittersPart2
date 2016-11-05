@@ -42,8 +42,8 @@ public class Main extends Application {
 			grid.setAlignment(Pos.BASELINE_LEFT);
 			grid.setHgap(5);
 			grid.setVgap(2);
-			grid.setPadding(new Insets(1, 1, 1, 1));
-			Scene scene = new Scene(grid, 700, 700);
+			grid.setPadding(new Insets(10, 10, 10, 10));
+			Scene scene = new Scene(grid, 500, 500);
 			primaryStage.setScene(scene);
 			
 			
@@ -59,9 +59,9 @@ public class Main extends Application {
 			TextField nameField = new TextField();
 			grid.add(nameField, 1, 11);
 			Label critterNum = new Label("Number:");
-			grid.add(critterNum, 2, 11);
+			grid.add(critterNum, 0, 12);
 			TextField numField = new TextField();
-			grid.add(numField, 3, 11);
+			grid.add(numField, 1, 12);
 			numField.setMaxWidth(60);
 			Button makeBtn = new Button();
 	        makeBtn.setText("Make Critter(s)");
@@ -87,16 +87,16 @@ public class Main extends Application {
 	            		try{
 	            			int numInt = Integer.parseInt(num);
 	            		} catch(NumberFormatException e) {
-	            			grid.add(wrongInput, 3, 15);
+	            			grid.add(wrongInput, 1, 14);
 	            		}
 	            	}
 	            }
 	        });
-	        grid.add(makeBtn, 7, 11);
+	        grid.add(makeBtn, 1, 13);
 			
 			/** show */
 	        Label show = new Label("Display World:");
-			grid.add(show, 0, 30);
+			grid.add(show, 10, 10);
 	        Button displayBtn = new Button();
 	        displayBtn.setText("Show Critters");
 	        
@@ -106,16 +106,16 @@ public class Main extends Application {
 	            	new WorldDisplay();
 	            }
 	        });
-	        grid.add(displayBtn, 1, 30);
+	        grid.add(displayBtn, 10, 11);
 			
 			
 			/** step */
 			Label step = new Label("Perform Time Steps");
-			grid.add(step, 0, 50);
+			grid.add(step, 0, 30);
 			Label stepLabel = new Label("Number of Steps:");
-			grid.add(stepLabel, 0, 51);
+			grid.add(stepLabel, 0, 31);
 			TextField stepField = new TextField();
-			grid.add(stepField, 1, 51);
+			grid.add(stepField, 1, 31);
 			stepField.setMaxWidth(60);
 			Button stepBtn = new Button();
 	        stepBtn.setText("Perform Steps(s)");
@@ -137,13 +137,75 @@ public class Main extends Application {
 	            		try{
 	            			int numInt = Integer.parseInt(num);
 	            		} catch(NumberFormatException e) {
-	            			grid.add(wrongStepInput, 1, 52);
+	            			grid.add(wrongStepInput, 1, 33);
 	            		}
 	            	}
 	            }
 	        });
-	        grid.add(stepBtn, 7, 51);
+	        grid.add(stepBtn, 1, 32);
 			
+	        /** stats */
+	        Label stats = new Label("Show Statistics:");
+			grid.add(stats, 10, 30);
+	        Button statsBtn = new Button();
+	        statsBtn.setText("Run");
+	        
+	        statsBtn.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            }
+	        });
+	        grid.add(statsBtn, 10, 31);
+	        
+	        /** seed */
+			Label seed = new Label("Set Seed");
+			grid.add(seed, 0, 50);
+			Label seedLabel = new Label("Seed Number:");
+			grid.add(seedLabel, 0, 51);
+			TextField seedField = new TextField();
+			grid.add(seedField, 1, 51);
+			seedField.setMaxWidth(60);
+			Button seedBtn = new Button();
+	        seedBtn.setText("Set");
+	        Text wrongSeedInput = new Text("Invalid Number!");
+			wrongSeedInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
+			wrongSeedInput.setFill(Color.RED);
+			
+	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	if(grid.getChildren().contains(wrongSeedInput)) {
+	            		grid.getChildren().remove(wrongSeedInput);
+	            	}
+	            	String num;
+	            	if((seedField.getText() != null && !seedField.getText().isEmpty())) {
+	            		num = seedField.getText();
+	            		num = num.trim();
+	            		// need a try block for invalid number
+	            		try{
+	            			int numInt = Integer.parseInt(num);
+	            		} catch(NumberFormatException e) {
+	            			grid.add(wrongSeedInput, 1, 53);
+	            		}
+	            	}
+	            }
+	        });
+	        grid.add(seedBtn, 1, 52);
+	        
+	        
+	        /** quit */
+			Button quitBtn = new Button();
+	        quitBtn.setText("Quit");
+			
+	        quitBtn.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	System.exit(1); // TODO might probably need to change this
+	            }
+	        });
+	        grid.add(quitBtn, 10, 50);
+	        
+	        
 	        primaryStage.show();
 	        
 		} catch(Exception e) {

@@ -35,6 +35,8 @@ import java.util.*;
 
 public class Main extends Application {
 	static GridPane grid = new GridPane();
+	WorldDisplay worldStage; 
+	boolean worldStageInit = false; 
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -77,8 +79,9 @@ public class Main extends Application {
 	            	if(grid.getChildren().contains(wrongInput)) {
 	            		grid.getChildren().remove(wrongInput);
 	            	}
-	            	String name;
+	            	String name = null;
 	            	String num;
+	            	int numInt = 0;
 	            	if((nameField.getText() != null && !nameField.getText().isEmpty())) {
 	            		name = nameField.getText();
 	            	}
@@ -87,10 +90,23 @@ public class Main extends Application {
 	            		num = num.trim();
 	            		// need a try block for invalid number
 	            		try{
-	            			int numInt = Integer.parseInt(num);
+	            			numInt = Integer.parseInt(num);
 	            		} catch(NumberFormatException e) {
 	            			grid.add(wrongInput, 1, 14);
 	            		}
+	            	}
+	            	try {
+	            		for(int i = 0; i < numInt; i++) {
+	            			Critter.makeCritter(name);
+	            			if(!worldStageInit) {
+	            				worldStage = new WorldDisplay();
+	            				worldStageInit = true; 
+	            			} else {
+	            				worldStage.update();
+	            			}
+	            		}
+	            	} catch(InvalidCritterException e) { 
+	            		System.out.println(e.toString());
 	            	}
 	            }
 	        });
@@ -105,7 +121,13 @@ public class Main extends Application {
 	        displayBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
-	            	new WorldDisplay();
+	            	if(!worldStageInit) {
+	            		worldStage = new WorldDisplay();	
+	            		worldStageInit = true;
+	            	} else {
+	            		worldStage.update();
+	            	}
+	            	
 	            }
 	        });
 	        grid.add(displayBtn, 10, 11);
@@ -132,21 +154,30 @@ public class Main extends Application {
 	            		grid.getChildren().remove(wrongStepInput);
 	            	}
 	            	String num;
+	            	int numInt = 1;
 	            	if((stepField.getText() != null && !stepField.getText().isEmpty())) {
 	            		num = stepField.getText();
 	            		num = num.trim();
 	            		// need a try block for invalid number
 	            		try{
-	            			int numInt = Integer.parseInt(num);
+	            			numInt = Integer.parseInt(num);
 	            		} catch(NumberFormatException e) {
 	            			grid.add(wrongStepInput, 1, 33);
 	            		}
+	            	}
+	            	for(int i = 0; i < numInt; i++) {
+	            		Critter.worldTimeStep();
+		            	if(!worldStageInit) {
+		            		worldStage = new WorldDisplay();	
+		            		worldStageInit = true;
+		            	} else {
+		            		worldStage.update();
+		            	}
 	            	}
 	            }
 	        });
 	        grid.add(stepBtn, 1, 32);
 			
-//<<<<<<< HEAD
 	        /** stats */
 	        Label stats = new Label("Show Statistics:");
 			grid.add(stats, 10, 30);
@@ -174,9 +205,9 @@ public class Main extends Application {
 			wrongSeedInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongSeedInput.setFill(Color.RED);
 			//grid.getChildren().addAll(welcome,make);
-			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
-			primaryStage.show();
-			worldStage.update();
+//			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
+//			primaryStage.show();
+//			worldStage.update();
 
 			
 	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -222,8 +253,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-//        Critter.clearWorld(); // initialize the world map
-//
+        Critter.clearWorld(); // initialize the world map
 //		try {
 //			Critter.makeCritter("Craig");
 //			Critter.makeCritter("Critter1");

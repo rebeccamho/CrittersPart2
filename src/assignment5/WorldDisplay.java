@@ -17,8 +17,8 @@ public class WorldDisplay extends Stage {
 	
 	int rows = Params.world_height;
 	int cols = Params.world_width;
-	int worldHeight = 750; 
-	int worldWidth = 500;
+	int worldHeight = 700; 
+	int worldWidth = 700;
 	int rowLen = (int) Math.floor(worldHeight/rows);
 	int colLen = (int) Math.floor(worldWidth/cols);
 	
@@ -42,7 +42,8 @@ public class WorldDisplay extends Stage {
 		
 		Scene scene = new Scene(grid, worldWidth, worldHeight, Color.WHITE);
 		this.setScene(scene);
-		this.show();
+		//this.show();
+		update();
 	   } 
 	
 	public void update() { 

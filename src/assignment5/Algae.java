@@ -11,34 +11,24 @@
  */
 package assignment5;
 
-/*
- * Do not change this file.
- */
 import assignment5.Critter.TestCritter;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
 public class Algae extends TestCritter {
 
 	public String toString() { return "@"; }
 	
-	public Shape viewShape(int colLen, int rowLen) {
-		Circle c = new Circle(Math.min(colLen,rowLen)/2);
-		return c;
+	public boolean fight(String opponent) {
+		if (toString().equals(opponent)) { // same species as me!
+			/* try to move away */
+			walk(Critter.getRandomInt(8));
+		}
+		return false; 
 	}
-	
-	public Color viewOutlineColor() {
-		return Color.LIMEGREEN;
-	}
-	
-	public Color viewFillColor() {
-		return Color.GREEN;
-	}
-	
-	public boolean fight(String not_used) { return false; }
 	
 	public void doTimeStep() {
 		setEnergy(getEnergy() + Params.photosynthesis_energy_amount);
 	}
+	
+	public CritterShape viewShape() { return CritterShape.CIRCLE; }
+	public javafx.scene.paint.Color viewColor() { return javafx.scene.paint.Color.GREEN; }
 }

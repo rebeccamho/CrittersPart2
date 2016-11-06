@@ -205,13 +205,11 @@ public class Main extends Application {
 	        Text wrongSeedInput = new Text("Invalid Number!");
 			wrongSeedInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongSeedInput.setFill(Color.RED);
-//=======
 			//grid.getChildren().addAll(welcome,make);
 //			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
 //			primaryStage.show();
 //			worldStage.update();
 
-//>>>>>>> irene
 			
 	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override

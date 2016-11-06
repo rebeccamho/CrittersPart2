@@ -26,6 +26,34 @@ import javafx.scene.shape.Shape;
 
 
 public abstract class Critter {
+	public enum CritterShape {
+		CIRCLE,
+		SQUARE,
+		TRIANGLE,
+		DIAMOND,
+		STAR
+	}
+	
+	/* the default color is white, which I hope makes critters invisible by default
+	 * If you change the background color of your View component, then update the default
+	 * color to be the same as you background 
+	 * 
+	 * critters must override at least one of the following three methods, it is not 
+	 * proper for critters to remain invisible in the view
+	 * 
+	 * If a critter only overrides the outline color, then it will look like a non-filled 
+	 * shape, at least, that's the intent. You can edit these default methods however you 
+	 * need to, but please preserve that intent as you implement them. 
+	 */
+	public javafx.scene.paint.Color viewColor() { 
+		return javafx.scene.paint.Color.WHITE; 
+	}
+	
+	public javafx.scene.paint.Color viewOutlineColor() { return viewColor(); }
+	public javafx.scene.paint.Color viewFillColor() { return viewColor(); }
+	
+	public abstract CritterShape viewShape(); 
+	
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
@@ -58,10 +86,12 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	private int new_x_coord;
+	private int new_y_coord;
 	
 	protected final String look(int direction, boolean steps) { 
-		int originalX = x_coord; 
-		int originalY = y_coord; 
+		//int originalX = x_coord; 
+		//int originalY = y_coord; 
 		
 		if(steps == false) {	// critter is going to walk (1 step)
 			walk(direction);
@@ -71,8 +101,8 @@ public abstract class Critter {
 		
 		int index = this.convertCoordToIndex(); 
 		
-		x_coord = originalX; 
-		y_coord = originalY; 
+		//x_coord = originalX; 
+		//y_coord = originalY; 
 		energy = energy - Params.look_energy_cost; 
 		
 		if(worldLists.get(index).size() != 0) {
@@ -93,11 +123,7 @@ public abstract class Critter {
 			return;
 		}
 		
-		movedThisTurn = true;
-		int originalX = x_coord;
-		int originalY = y_coord;
-		
-		removeCritterFromSpace(); // remove Critter from its current space in world
+		movedThisTurn = true;		
 		
 		int steps = 1; // 1 step for walking
 		if(direction == 0) { // move right
@@ -124,17 +150,11 @@ public abstract class Critter {
 		
 		energy = energy - Params.walk_energy_cost;
 		
-		if(!inAFight) {
-			addCritterToSpace();
-		} else { // Critter is in a fight, need to check if space is occupied
-			int index = convertCoordToIndex();
-			if(worldLists.get(index).size() > 0) { // space is already occupied
-				x_coord = originalX;
-				y_coord = originalY;
-				addCritterToSpace(); // add Critter to its original space (don't move it)
-			} else { // space is not occupied
+		if(inAFight) { // Critter is in a fight, need to check if space is occupied
+			int index = convertNewCoordToIndex(); // space where Critter wants to move
+			if(worldLists.get(index).size() == 0) { // space is not occupied
 				addCritterToSpace();
-			}
+			} 
 		}
 	}
 	
@@ -152,7 +172,7 @@ public abstract class Critter {
 		movedThisTurn = true;
 		int originalX = x_coord;
 		int originalY = y_coord;
-		removeCritterFromSpace(); // remove Critter from its current space in world
+		//removeCritterFromSpace(); // remove Critter from its current space in world
 		
 		int steps = 2; // 2 steps for running
 		if(direction == 0) { // move right
@@ -178,17 +198,11 @@ public abstract class Critter {
 		}
 		
 		energy = energy - Params.run_energy_cost;
-		if(!inAFight) {
-			addCritterToSpace();
-		} else { // Critter is in a fight, need to check if space is occupied
-			int index = convertCoordToIndex();
-			if(worldLists.get(index).size() > 0) { // space is already occupied
-				x_coord = originalX;
-				y_coord = originalY;
-				addCritterToSpace(); // add Critter to its original space (don't move it)
-			} else { // space is not occupied
+		if(inAFight) { // Critter is in a fight, need to check if space is occupied
+			int index = convertNewCoordToIndex(); // space where Critter wants to move
+			if(worldLists.get(index).size() == 0) { // space is not occupied
 				addCritterToSpace();
-			}
+			} 
 		}
 	}
 	
@@ -228,9 +242,9 @@ public abstract class Critter {
 	 */
 	private final void moveRight(int steps) {
 		if(x_coord >= Params.world_width - steps) { // critter will go over right edge of board
-			x_coord = x_coord - (Params.world_width - steps);
+			new_x_coord = x_coord - (Params.world_width - steps);
 		} else {
-			x_coord = x_coord + steps;
+			new_x_coord = x_coord + steps;
 		}
 	}
 	
@@ -240,9 +254,9 @@ public abstract class Critter {
 	 */
 	private final void moveLeft(int steps) {
 		if(x_coord < steps) { // critter will go over left edge of board
-			x_coord = Params.world_width - (steps - x_coord);
+			new_x_coord = Params.world_width - (steps - x_coord);
 		} else {
-			x_coord = x_coord - steps;
+			new_x_coord = x_coord - steps;
 		}
 	}
 	
@@ -252,9 +266,9 @@ public abstract class Critter {
 	 */
 	private final void moveUp(int steps) {
 		if(y_coord < steps) { // critter will go over top edge of board
-			y_coord = Params.world_height - (steps - y_coord);
+			new_y_coord = Params.world_height - (steps - y_coord);
 		} else {
-			y_coord = y_coord - steps;
+			new_y_coord = y_coord - steps;
 		}
 	}
 	
@@ -264,9 +278,9 @@ public abstract class Critter {
 	 */
 	private final void moveDown(int steps) {
 		if(y_coord >= Params.world_height - steps) { // critter will go over bottom edge of board
-			y_coord = y_coord - (Params.world_height - steps);
+			new_y_coord = y_coord - (Params.world_height - steps);
 		} else {
-			y_coord = y_coord + steps;
+			new_y_coord = y_coord + steps;
 		}
 	}
 	
@@ -301,12 +315,10 @@ public abstract class Critter {
 	 * x and y coordinates.
 	 */
 	private final void addCritterToSpace() {
-		int index = this.convertCoordToIndex();
-		/*
-		List<Critter> space = worldLists.get(index);
-		space.add(this);
-		*/
+		int index = this.convertNewCoordToIndex();
 		worldLists.get(index).add(this);
+		this.x_coord = this.new_x_coord;
+		this.y_coord = this.new_y_coord;
 	}
 	
 	public abstract void doTimeStep();
@@ -348,13 +360,6 @@ public abstract class Critter {
 		return r;
 	}
 	
-	public Color viewOutlineColor() {
-		return Color.BEIGE;
-	}
-	
-	public Color viewFillColor() {
-		return Color.SIENNA;
-	}
 	
 	/**
 	 * Gets a list of critters of a specific type.
@@ -490,13 +495,19 @@ public abstract class Critter {
 			current.movedThisTurn = false; // reset movedThisTurn
 			current.doTimeStep();
 			current.energy = current.energy - Params.rest_energy_cost;
+			
+		}
+		for(int i = 0; i < population.size(); i++) { // now add all Critters to the space they moved to
+			Critter current = population.get(i);
 			if(current.energy <= 0) { // kill critter
 				current.removeCritterFromSpace(); // remove Critter from its space
 				population.remove(current); // remove Critter from population
 				i = i - 1; // all Critters will be shifted left, so need to update i accordingly
+			} else {
+				current.removeCritterFromSpace();
+				current.addCritterToSpace();
 			}
 		}
-		
 		
 		
 		/* handle encounters between Critters */
@@ -587,6 +598,11 @@ public abstract class Critter {
 	
 	private final int convertCoordToIndex() {
 		int index = this.y_coord*Params.world_width + this.x_coord;
+		return index;
+	}
+	
+	private final int convertNewCoordToIndex() {
+		int index = this.new_y_coord*Params.world_width + this.new_x_coord;
 		return index;
 	}
 	

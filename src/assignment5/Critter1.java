@@ -31,6 +31,8 @@ public class Critter1 extends Critter {
 		dir = Critter.getRandomInt(8);
 	}
 	
+	
+	
 	public Shape viewShape(int colLen, int rowLen) {
 		Circle c = new Circle(Math.min(colLen,rowLen)/2);
 		return c;
@@ -76,5 +78,7 @@ public class Critter1 extends Critter {
 		
 
 	}
+	
+
 
 }

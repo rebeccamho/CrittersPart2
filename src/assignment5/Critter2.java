@@ -10,6 +10,9 @@
  * Fall 2016
  */
 package assignment5;
+
+import assignment5.Critter.CritterShape;
+
 /*
  * to begin, Critter2 has 64 genes that are equally distributed in 8 directions
  * Critter1 gets randomly assigned an initial direction
@@ -30,6 +33,10 @@ public class Critter2 extends Critter {
 		for (int k = 0; k < 8; k += 1) {
 			genes[k] = GENE_TOTAL / 8;
 		}
+	}
+	
+	public CritterShape viewShape() {
+		return Critter.CritterShape.SQUARE; 
 	}
 	
 	public boolean fight(String opponent) { 

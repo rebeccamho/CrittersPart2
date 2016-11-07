@@ -19,6 +19,8 @@
 
 package assignment5;
 
+import assignment5.Critter.CritterShape;
+
 public class Critter3 extends Critter {
 
 	private static final int GENE_TOTAL = 16;
@@ -31,6 +33,10 @@ public class Critter3 extends Critter {
 			genes[k] = GENE_TOTAL / 8;
 		}
 		dir = Critter.getRandomInt(8);
+	}
+	
+	public CritterShape viewShape() {
+		return Critter.CritterShape.SQUARE; 
 	}
 	
 	@Override

@@ -18,6 +18,8 @@
 
 package assignment5;
 
+import assignment5.Critter.CritterShape;
+
 public class Critter4 extends Critter {
 
 	private int[] genes = new int[6];
@@ -29,6 +31,10 @@ public class Critter4 extends Critter {
 			genes[k] = Critter.getRandomInt(4);
 		}
 		dir = Critter.getRandomInt(8);
+	}
+	
+	public CritterShape viewShape() {
+		return Critter.CritterShape.SQUARE; 
 	}
 	
 	@Override

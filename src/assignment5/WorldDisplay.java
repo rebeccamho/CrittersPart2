@@ -52,7 +52,9 @@ public class WorldDisplay extends Stage {
 				int index = convertCoordToIndex(r,c);
 				if(Critter.worldLists.get(index).size() > 0) {
 					Critter crit = Critter.worldLists.get(index).get(0);
-					Shape s = crit.viewShape(colLen,rowLen);
+					Critter.CritterShape sCrit = crit.viewShape();
+					Shape s = getShape(sCrit); 
+					
 					s.setFill(crit.viewFillColor());
 					s.setStroke(crit.viewOutlineColor());
 					this.grid.add(s, c, r); // add the shape to the grid.
@@ -66,6 +68,15 @@ public class WorldDisplay extends Stage {
 	private final int convertCoordToIndex(int r, int c) {
 		int index = r*Params.world_width + c;
 		return index;
+	}
+	
+	private final Shape getShape(Critter.CritterShape critShape) {
+//		if(sCrit.equals(Critter.CritterShape.SQUARE)) {
+//			s = new Rectangle(colLen,rowLen);
+//		} else if {
+//			
+//		}
+		return null;
 	}
 
 }

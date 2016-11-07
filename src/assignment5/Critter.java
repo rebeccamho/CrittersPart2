@@ -340,8 +340,8 @@ public abstract class Critter {
 			Critter newCritter = (Critter) Class.forName(class_name).newInstance();
 			
 			newCritter.energy = Params.start_energy;
-			newCritter.x_coord = Critter.getRandomInt(Params.world_width);
-			newCritter.y_coord = Critter.getRandomInt(Params.world_height);
+			newCritter.new_x_coord = Critter.getRandomInt(Params.world_width);
+			newCritter.new_y_coord = Critter.getRandomInt(Params.world_height);
 			newCritter.addCritterToSpace();
 			population.add(newCritter);
 
@@ -355,10 +355,10 @@ public abstract class Critter {
 	}
 	
 
-	public Shape viewShape(int colLen, int rowLen) {
-		Rectangle r = new Rectangle(colLen,rowLen);
-		return r;
-	}
+//	public Shape viewShape(int colLen, int rowLen) {
+//		Rectangle r = new Rectangle(colLen,rowLen);
+//		return r;
+//	}
 	
 	
 	/**

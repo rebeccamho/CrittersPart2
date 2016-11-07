@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
+import javafx.scene.shape.Polygon;
 
 
 
@@ -62,7 +63,7 @@ public class WorldDisplay extends Stage {
 				if(Critter.worldLists.get(index).size() > 0) {
 					Critter crit = Critter.worldLists.get(index).get(0);
 					Critter.CritterShape sCrit = crit.viewShape();
-					Shape s = getShape(sCrit); 
+					Shape s = getShape(sCrit,c,r); 
 					ShapeGrid sg = new ShapeGrid(s,c,r);
 					shapeList.add(sg);
 					s.setFill(crit.viewFillColor());
@@ -79,14 +80,18 @@ public class WorldDisplay extends Stage {
 		return index;
 	}
 	
-	private final Shape getShape(Critter.CritterShape critShape) {
+	private final Shape getShape(Critter.CritterShape critShape, int c, int r) {
 		Shape s = null;
-		if(critShape.equals(Critter.CritterShape.SQUARE)) {
-			s = new Rectangle(colLen,rowLen);
-		} else if(critShape.equals(Critter.CritterShape.CIRCLE)) {
-			s = new Circle(Math.min(colLen,rowLen)/2);
-		} else if(critShape.equals(Critter.CritterShape.DIAMOND)) {
-			//s = 
+		if(critShape.equals(Critter.CritterShape.CIRCLE)) {
+			s = new Circle(Math.min(colLen-1,rowLen-1)/2);
+		} else if(critShape.equals(Critter.CritterShape.SQUARE)) {
+			s = new Rectangle(colLen-1,rowLen-1);
+		} else if(critShape.equals(Critter.CritterShape.TRIANGLE)) {
+			Polygon p = new Polygon();
+			double cLen = (double) colLen-1; 
+			double rLen = (double) rowLen-1;
+			p.getPoints().addAll(0.0, rLen, cLen/2, 0.0, cLen, rLen);
+			s = p; 
 		}
 		return s;
 	}

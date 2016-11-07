@@ -12,6 +12,7 @@
 package assignment5;
 
 import assignment5.Critter.CritterShape;
+import javafx.scene.paint.Color;
 
 /*
  * to begin, Critter2 has 64 genes that are equally distributed in 8 directions
@@ -35,8 +36,17 @@ public class Critter2 extends Critter {
 		}
 	}
 	
+	@Override
 	public CritterShape viewShape() {
-		return Critter.CritterShape.SQUARE; 
+		return Critter.CritterShape.TRIANGLE; 
+	}
+	
+	public Color viewOutlineColor() {
+		return Color.LIGHTPINK;
+	}
+	
+	public Color viewFillColor() {
+		return Color.PINK;
 	}
 	
 	public boolean fight(String opponent) { 

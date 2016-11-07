@@ -35,6 +35,7 @@ public class Critter3 extends Critter {
 		dir = Critter.getRandomInt(8);
 	}
 	
+	@Override	
 	public CritterShape viewShape() {
 		return Critter.CritterShape.SQUARE; 
 	}

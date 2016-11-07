@@ -63,6 +63,7 @@ public abstract class Critter {
 	private boolean movedThisTurn;
 	private boolean inAFight;
 	
+	
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -153,6 +154,7 @@ public abstract class Critter {
 		if(inAFight) { // Critter is in a fight, need to check if space is occupied
 			int index = convertNewCoordToIndex(); // space where Critter wants to move
 			if(worldLists.get(index).size() == 0) { // space is not occupied
+				removeCritterFromSpace();
 				addCritterToSpace();
 			} 
 		}
@@ -201,6 +203,7 @@ public abstract class Critter {
 		if(inAFight) { // Critter is in a fight, need to check if space is occupied
 			int index = convertNewCoordToIndex(); // space where Critter wants to move
 			if(worldLists.get(index).size() == 0) { // space is not occupied
+				removeCritterFromSpace();
 				addCritterToSpace();
 			} 
 		}
@@ -497,8 +500,10 @@ public abstract class Critter {
 			current.energy = current.energy - Params.rest_energy_cost;
 			
 		}
+
+		
 		for(int i = 0; i < population.size(); i++) { // now add all Critters to the space they moved to
-			Critter current = population.get(i);
+			Critter current = population.get(i);	
 			if(current.energy <= 0) { // kill critter
 				current.removeCritterFromSpace(); // remove Critter from its space
 				population.remove(current); // remove Critter from population
@@ -508,7 +513,7 @@ public abstract class Critter {
 				current.addCritterToSpace();
 			}
 		}
-		
+
 		
 		/* handle encounters between Critters */
 		for(int i = 0; i < worldLists.size(); i++) { 
@@ -547,7 +552,8 @@ public abstract class Critter {
 				}	
 			}
 		}
-		
+
+
 		/* create Params.refresh_algae_count new Algae */ 
 		try {
 			for(int j = 0; j < Params.refresh_algae_count; j++) {
@@ -556,6 +562,7 @@ public abstract class Critter {
 		} catch(InvalidCritterException e) {
 			System.out.println(e.toString());
 		}
+		
 		
 		/* add babies to population */
 		int size = babies.size();

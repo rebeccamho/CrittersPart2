@@ -32,12 +32,7 @@ public class Critter1 extends Critter {
 	}
 	
 	
-//	
-//	public Shape viewShape(int colLen, int rowLen) {
-//		Circle c = new Circle(Math.min(colLen,rowLen)/2);
-//		return c;
-//	}
-	
+	@Override
 	public CritterShape viewShape() {
 		return Critter.CritterShape.SQUARE; 
 	}

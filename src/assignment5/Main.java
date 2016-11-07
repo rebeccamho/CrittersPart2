@@ -406,7 +406,7 @@ public class Main extends Application {
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	double sliderVal = slider.getValue();
-	            	speed = (2*2000_000_000 / sliderVal); // set speed of animation
+	            	speed = (2000_000_000 / sliderVal); // set speed of animation
 	            	timer.start();
 	            	grid.add(stopAnimateBtn, 1, 72);
 	            	// TODO disable other buttons while this is happening

@@ -12,6 +12,8 @@
 
 package assignment5;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.lang.String;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -33,15 +35,20 @@ import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.*;
-
 import assignment5.Critter;
 import assignment5.InvalidCritterException;
 
+
+
 public class Main extends Application {
+    static ByteArrayOutputStream testOutputString;	
+    static PrintStream old = System.out;	// if you want to restore output to console
+	
 	static GridPane grid = new GridPane();
 	WorldDisplay worldStage; 
 	boolean worldStageInit = false; 
 	private double speed;
+	Text statsOutput = new Text();
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -222,18 +229,21 @@ public class Main extends Application {
 	        Text wrongStatsInput = new Text("Invalid Critter Type!");
 			wrongStatsInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongStatsInput.setFill(Color.RED);
-	        
+	        //Text statsOutput = new Text();
 	        statsBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	if(grid.getChildren().contains(wrongStatsInput)) { // remove wrong critter text
 	            		grid.getChildren().remove(wrongStatsInput);
 	            	}
+	            	if(grid.getChildren().contains(statsOutput)) {
+	            		grid.getChildren().remove(statsOutput);
+	            	}
 	            	String name = null;
 	            	String num = null;
 	            	int numInt = 0;
-	            	if((nameField.getText() != null && !nameField.getText().isEmpty())) { // get Critter name
-	            		name = nameField.getText();
+	            	if((statsNameField.getText() != null && !statsNameField.getText().isEmpty())) { // get Critter name
+	            		name = statsNameField.getText();
 	            		
 	            	}
 	            	try {
@@ -251,6 +261,12 @@ public class Main extends Application {
          				} 
          				Method statsMethod = testClass.getMethod("runStats", List.class);
          				statsMethod.invoke(testClass, critters);
+         				String text = testOutputString.toString();
+         				statsOutput.setText(text);
+         				statsOutput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
+         				grid.add(statsOutput, 0, 80);
+         				testOutputString.reset();
+         				// TODO figure out a way to make it so that this doesn't resize first column so much, really ugly
 					
          			} catch(InvalidCritterException | NoSuchMethodException | SecurityException | 
          					IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
@@ -403,14 +419,12 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
         Critter.clearWorld(); // initialize the world map
-//		try {
-//			Critter.makeCritter("Craig");
-//			Critter.makeCritter("Critter1");
-//			Critter.makeCritter("Critter1");
-//			Critter.makeCritter("Algae");
-//		} catch(InvalidCritterException e) {
-//			System.out.println("you fucked up");
-//		}
+        testOutputString = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(testOutputString);
+        // Save the old System.out.
+        old = System.out;
+        // Tell Java to use the special stream; all console output will be redirected here from now
+        System.setOut(ps);
 
 		launch(args);
 	}

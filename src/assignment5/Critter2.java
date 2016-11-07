@@ -38,15 +38,15 @@ public class Critter2 extends Critter {
 	
 	@Override
 	public CritterShape viewShape() {
-		return Critter.CritterShape.TRIANGLE; 
+		return Critter.CritterShape.DIAMOND; 
 	}
 	
 	public Color viewOutlineColor() {
-		return Color.LIGHTPINK;
+		return Color.DEEPPINK;
 	}
 	
 	public Color viewFillColor() {
-		return Color.PINK;
+		return Color.LIGHTPINK;
 	}
 	
 	public boolean fight(String opponent) { 

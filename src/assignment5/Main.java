@@ -398,16 +398,26 @@ public class Main extends Application {
 	            	if(grid.getChildren().contains(stopAnimateBtn)) {
 	            		grid.getChildren().remove(stopAnimateBtn);
 	            	}
+	            	makeBtn.setDisable(false);
+	            	displayBtn.setDisable(false);
+	            	stepBtn.setDisable(false);
+	            	statsBtn.setDisable(false);
+	            	seedBtn.setDisable(false);
 	            }
 	        });
 	        startAnimateBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	double sliderVal = slider.getValue();
-	            	speed = (2*2000_000_000 / sliderVal); // set speed of animation
+	            	speed = (2000_000_000 / sliderVal); // set speed of animation
 	            	timer.start();
 	            	grid.add(stopAnimateBtn, 1, 72);
 	            	// TODO disable other buttons while this is happening
+	            	makeBtn.setDisable(true);
+	            	displayBtn.setDisable(true);
+	            	stepBtn.setDisable(true);
+	            	statsBtn.setDisable(true);
+	            	seedBtn.setDisable(true);
 	            }
 	        });
 	        grid.add(startAnimateBtn, 1, 72);
@@ -422,6 +432,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
         Critter.clearWorld(); // initialize the world map
+
         testOutputString = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(testOutputString);
         // Save the old System.out.

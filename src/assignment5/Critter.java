@@ -153,6 +153,7 @@ public abstract class Critter {
 		if(inAFight) { // Critter is in a fight, need to check if space is occupied
 			int index = convertNewCoordToIndex(); // space where Critter wants to move
 			if(worldLists.get(index).size() == 0) { // space is not occupied
+				removeCritterFromSpace();
 				addCritterToSpace();
 			} 
 		}
@@ -198,6 +199,7 @@ public abstract class Critter {
 		if(inAFight) { // Critter is in a fight, need to check if space is occupied
 			int index = convertNewCoordToIndex(); // space where Critter wants to move
 			if(worldLists.get(index).size() == 0) { // space is not occupied
+				removeCritterFromSpace();
 				addCritterToSpace();
 			} 
 		}
@@ -303,10 +305,7 @@ public abstract class Critter {
 	private final void removeCritterFromSpace() {
 		int index = this.convertCoordToIndex();
 		if(worldLists.get(index).contains(this)) {
-			System.out.println(worldLists.get(index).size());
 			worldLists.get(index).remove(this);
-			System.out.println(worldLists.get(index).size());
-
 		}
 	}
 	

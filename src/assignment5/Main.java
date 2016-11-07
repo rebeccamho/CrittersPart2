@@ -87,6 +87,7 @@ public class Main extends Application {
 	            	int numInt = 0;
 	            	if((nameField.getText() != null && !nameField.getText().isEmpty())) {
 	            		name = nameField.getText();
+	            		// TODO check for invalid name
 	            	}
 	            	if((numField.getText() != null && !numField.getText().isEmpty())) {
 	            		num = numField.getText();
@@ -245,11 +246,10 @@ public class Main extends Application {
 	            	System.exit(1); // TODO might probably need to change this
 	            }
 	        });
-	        grid.add(quitBtn, 10, 50);
+	        grid.add(quitBtn, 10, 70);
 	        
 	        
 	        /** animation */
-	        /*
 	        AnimationTimer timer = new AnimationTimer() { 
 	            private long lastUpdate = 0 ;
 	            @Override
@@ -283,8 +283,8 @@ public class Main extends Application {
 	        slider.setMinorTickCount(5);
 	        slider.setBlockIncrement(10);
 	        grid.add(slider, 1, 71);
-	        Button animateBtn = new Button();
-	        animateBtn.setText("Start Animation");
+	        Button startAnimateBtn = new Button();
+	        startAnimateBtn.setText("Start Animation");
 	        Button stopAnimateBtn = new Button();
 	        stopAnimateBtn.setText("Stop Animation");
 	        stopAnimateBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -296,17 +296,17 @@ public class Main extends Application {
 	            	}
 	            }
 	        });
-	        animateBtn.setOnAction(new EventHandler<ActionEvent>() {
+	        startAnimateBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	double sliderVal = slider.getValue();
-	            	speed = (500_000_000 / sliderVal); // set speed of animation
+	            	speed = (2*2000_000_000 / sliderVal); // set speed of animation
 	            	timer.start();
-	            	 grid.add(stopAnimateBtn, 1, 72);
+	            	grid.add(stopAnimateBtn, 1, 72);
 	            }
 	        });
-	        grid.add(animateBtn, 1, 72);
-	        */
+	        grid.add(startAnimateBtn, 1, 72);
+	        
 	           
 	        primaryStage.show();
 	        

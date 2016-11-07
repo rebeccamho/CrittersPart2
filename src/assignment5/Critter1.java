@@ -47,7 +47,7 @@ public class Critter1 extends Critter {
 	
 	public boolean fight(String not_used) { 
 		/* runs if it has not already moved and has enough energy */ 
-		if(this.getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost)) {
+		if(this.getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost) && hasMoved() == false) {
 			run(dir);
 			dir = Critter.getRandomInt(8);
 			return false;
@@ -62,15 +62,21 @@ public class Critter1 extends Critter {
 		if(this.getEnergy() > Params.rest_energy_cost + Params.run_energy_cost) {
 			int move = Critter.getRandomInt(3);		// 3 options: walk, run, don't move
 			if(move == 0) {		// Critter1 walks
-				walk(dir); 
+				String critterName = look(dir,false);
+				if(critterName == null || critterName == "@") {
+					walk(dir);
+				}
 				dir = Critter.getRandomInt(8);
 			} else if(move == 1) {
-				run(dir); 
+				String critterName = look(dir,true);
+				if(critterName == null || critterName == "@") {
+					run(dir); 
+				}
 				dir = Critter.getRandomInt(8);
-			} 
+			}
 		}
 		
-		if(getEnergy() > Params.min_reproduce_energy*5) {
+		if(getEnergy() > Params.min_reproduce_energy*2) {
 			Critter1 child = new Critter1(); 
 			reproduce(child,Critter.getRandomInt(8));
 		}

@@ -62,6 +62,7 @@ public abstract class Critter {
 	private static boolean worldInitialized = false;
 	private boolean movedThisTurn;
 	private boolean inAFight;
+	private boolean looking; 
 	
 	
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
@@ -94,23 +95,32 @@ public abstract class Critter {
 		//int originalX = x_coord; 
 		//int originalY = y_coord; 
 		
+		looking = true; 
+		
 		if(steps == false) {	// critter is going to walk (1 step)
 			walk(direction);
 		} else if(steps == true) {	// critter is going to run (2 steps)
 			run(direction); 
 		}
 		
-		int index = this.convertCoordToIndex(); 
+		int index = this.convertNewCoordToIndex(); 
 		
 		//x_coord = originalX; 
 		//y_coord = originalY; 
 		energy = energy - Params.look_energy_cost; 
 		
 		if(worldLists.get(index).size() != 0) {
+			looking = false;
 			return worldLists.get(index).get(0).toString();
 		} else {
+			looking = false; 
 			return null; 
 		}
+	}
+	
+	
+	protected final boolean hasMoved() { 
+		return movedThisTurn;
 	}
 	
 	/**
@@ -124,7 +134,9 @@ public abstract class Critter {
 			return;
 		}
 		
-		movedThisTurn = true;		
+		if(!looking) {
+			movedThisTurn = true;
+		}		
 		
 		int steps = 1; // 1 step for walking
 		if(direction == 0) { // move right

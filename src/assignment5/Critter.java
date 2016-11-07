@@ -172,9 +172,6 @@ public abstract class Critter {
 		}
 		
 		movedThisTurn = true;
-		int originalX = x_coord;
-		int originalY = y_coord;
-		//removeCritterFromSpace(); // remove Critter from its current space in world
 		
 		int steps = 2; // 2 steps for running
 		if(direction == 0) { // move right
@@ -508,7 +505,7 @@ public abstract class Critter {
 				current.removeCritterFromSpace(); // remove Critter from its space
 				population.remove(current); // remove Critter from population
 				i = i - 1; // all Critters will be shifted left, so need to update i accordingly
-			} else {
+			} else if(current.movedThisTurn){
 				current.removeCritterFromSpace();
 				current.addCritterToSpace();
 			}

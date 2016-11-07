@@ -23,15 +23,15 @@ public class WorldDisplay extends Stage {
 	
 	int rows = Params.world_height;
 	int cols = Params.world_width;
-	int worldHeight = 700; 
-	int worldWidth = 700;
+	int worldHeight = 800; 
+	int worldWidth = 800;
 	int rowLen = (int) Math.floor(worldHeight/rows);
 	int colLen = (int) Math.floor(worldWidth/cols);
 	
 	WorldDisplay(){
 	    
 		this.setTitle("Critter World Grid -- Second Stage");
-		grid.setGridLinesVisible(true);
+		grid.setGridLinesVisible(false);
 
 
 		grid.getStyleClass().add("critter-grid");

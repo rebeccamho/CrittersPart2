@@ -379,6 +379,11 @@ public class Main extends Application {
 	            	if(grid.getChildren().contains(stopAnimateBtn)) {
 	            		grid.getChildren().remove(stopAnimateBtn);
 	            	}
+	            	makeBtn.setDisable(false);
+	            	displayBtn.setDisable(false);
+	            	stepBtn.setDisable(false);
+	            	statsBtn.setDisable(false);
+	            	seedBtn.setDisable(false);
 	            }
 	        });
 	        startAnimateBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -389,6 +394,11 @@ public class Main extends Application {
 	            	timer.start();
 	            	grid.add(stopAnimateBtn, 1, 72);
 	            	// TODO disable other buttons while this is happening
+	            	makeBtn.setDisable(true);
+	            	displayBtn.setDisable(true);
+	            	stepBtn.setDisable(true);
+	            	statsBtn.setDisable(true);
+	            	seedBtn.setDisable(true);
 	            }
 	        });
 	        grid.add(startAnimateBtn, 1, 72);

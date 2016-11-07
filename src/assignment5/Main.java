@@ -47,8 +47,11 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	WorldDisplay worldStage; 
 	boolean worldStageInit = false; 
+	StatsDisplay statsStage;
+	boolean statsStageInit = false;
 	private double speed;
 	Text statsOutput = new Text();
+	public static ArrayList<String> statsCritters = new ArrayList<String>();
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -139,6 +142,16 @@ public class Main extends Application {
 	            			} else {
 	            				worldStage.update();
 	            			}
+	            			if(!statsCritters.contains(name)) { // add Critter to stats list
+	            				statsCritters.add(name);
+	            			}
+	            			if(!statsStageInit) {
+	            				statsStage = new StatsDisplay();
+	            				statsStageInit = true; 
+	            				statsStage.update(statsCritters);
+	            			} else {
+	            				statsStage.update(statsCritters);
+	            			}
 	            		}
 	            	} catch(InvalidCritterException e) { 
 	            		grid.add(wrongCritterType,0,14);
@@ -162,6 +175,13 @@ public class Main extends Application {
 	            	} else {
 	            		worldStage.update();
 	            	}
+	            	if(!statsStageInit) {
+        				statsStage = new StatsDisplay();
+        				statsStageInit = true; 
+        				statsStage.update(statsCritters);
+        			} else {
+        				statsStage.update(statsCritters);
+        			}
 	            	
 	            }
 	        });
@@ -210,6 +230,13 @@ public class Main extends Application {
 		            	} else {
 		            		worldStage.update();
 		            	}
+		            	if(!statsStageInit) {
+            				statsStage = new StatsDisplay();
+            				statsStageInit = true; 
+            				statsStage.update(statsCritters);
+            			} else {
+            				statsStage.update(statsCritters);
+            			}
 	            	}
 	            }
 	        });
@@ -218,65 +245,35 @@ public class Main extends Application {
 	        /** stats */
 	        Label stats = new Label("Show Statistics:");
 			grid.add(stats, 10, 30);
-		
+			/*
 			Label statsCritterName = new Label("Critter Name:");
 			grid.add(statsCritterName, 10, 31);
 			TextField statsNameField = new TextField();
 			statsNameField.setMaxWidth(100);
 			grid.add(statsNameField, 11, 31);
+			*/
 	        Button statsBtn = new Button();
 	        statsBtn.setText("Run Stats");
+	        /*
 	        Text wrongStatsInput = new Text("Invalid Critter Type!");
 			wrongStatsInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongStatsInput.setFill(Color.RED);
-	        //Text statsOutput = new Text();
+			*/
 	        statsBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
-	            	if(grid.getChildren().contains(wrongStatsInput)) { // remove wrong critter text
-	            		grid.getChildren().remove(wrongStatsInput);
-	            	}
-	            	if(grid.getChildren().contains(statsOutput)) {
-	            		grid.getChildren().remove(statsOutput);
-	            	}
-	            	String name = null;
-	            	String num = null;
-	            	int numInt = 0;
-	            	if((statsNameField.getText() != null && !statsNameField.getText().isEmpty())) { // get Critter name
-	            		name = statsNameField.getText();
-	            		
-	            	}
-	            	try {
-	            		String myPackage = Critter.class.getPackage().toString().split(" ")[1];
-         				List<Critter> critters = Critter.getInstances(name);
-         				String critter_class_name = myPackage + "." + name;
-         			         				
-         				Critter testCritter; 
-         				Class<?> testClass; 
-         				try {
-             				testCritter = (Critter) Class.forName(critter_class_name).newInstance();
-             				testClass = testCritter.getClass();
-         				} catch(InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-         					throw new InvalidCritterException(critter_class_name);
-         				} 
-         				Method statsMethod = testClass.getMethod("runStats", List.class);
-         				statsMethod.invoke(testClass, critters);
-         				String text = testOutputString.toString();
-         				statsOutput.setText(text);
-         				statsOutput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
-         				grid.add(statsOutput, 0, 80);
-         				testOutputString.reset();
-         				// TODO figure out a way to make it so that this doesn't resize first column so much, really ugly
-					
-         			} catch(InvalidCritterException | NoSuchMethodException | SecurityException | 
-         					IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
-         				//System.out.println(e.toString());
-         				grid.add(wrongStatsInput, 10, 33);
-					
-         			}
+	            	if(!statsStageInit) {
+        				statsStage = new StatsDisplay();
+        				statsStageInit = true; 
+        				statsStage.update(statsCritters);
+        			} else {
+        				statsStage.update(statsCritters);
+        			}
+	            	
+	            	
 	            }
 	        });
-	        grid.add(statsBtn, 10, 32);
+	        grid.add(statsBtn, 10, 31);
 	        
 	        /** seed */
 			Label seed = new Label("Set Seed");
@@ -364,7 +361,13 @@ public class Main extends Application {
 	            			} else {
 	            				worldStage.update();
 	            			}
-	                    	
+	                    	if(!statsStageInit) {
+	            				statsStage = new StatsDisplay();
+	            				statsStageInit = true; 
+	            				statsStage.update(statsCritters);
+	            			} else {
+	            				statsStage.update(statsCritters);
+	            			}
 	                        lastUpdate = now ;
 	                    }
 	            }

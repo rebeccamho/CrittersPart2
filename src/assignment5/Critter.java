@@ -556,6 +556,9 @@ public abstract class Critter {
 			for(int j = 0; j < Params.refresh_algae_count; j++) {
 				Critter.makeCritter("Algae");
 			}
+			if(!Main.statsCritters.contains("Algae")) {
+				Main.statsCritters.add("Algae");
+			}
 		} catch(InvalidCritterException e) {
 			System.out.println(e.toString());
 		}

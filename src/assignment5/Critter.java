@@ -306,10 +306,7 @@ public abstract class Critter {
 	private final void removeCritterFromSpace() {
 		int index = this.convertCoordToIndex();
 		if(worldLists.get(index).contains(this)) {
-			System.out.println(worldLists.get(index).size());
 			worldLists.get(index).remove(this);
-			System.out.println(worldLists.get(index).size());
-
 		}
 	}
 	

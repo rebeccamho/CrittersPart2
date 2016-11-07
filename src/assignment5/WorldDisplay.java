@@ -54,6 +54,10 @@ public class WorldDisplay extends Stage {
 	public void update() { 
 		for(int r = 0; r < Params.world_height; r++) { 
 			for(int c = 0; c < Params.world_width; c++) {
+				Shape prevShape = getPreviousShape(r,c);
+				if(prevShape != null) {
+					grid.getChildren().remove(prevShape);
+				}
 				int index = convertCoordToIndex(r,c);
 				if(Critter.worldLists.get(index).size() > 0) {
 					Critter crit = Critter.worldLists.get(index).get(0);
@@ -64,9 +68,7 @@ public class WorldDisplay extends Stage {
 					s.setFill(crit.viewFillColor());
 					s.setStroke(crit.viewOutlineColor());
 					grid.add(s, c, r); // add the shape to the grid.
-				} else {
-//					grid.getChildren().remove(o)
-				}
+				} 
 			}
 		}
 		this.show();
@@ -89,10 +91,12 @@ public class WorldDisplay extends Stage {
 		return s;
 	}
 	
-	private final Shape cellWasFilled(int r, int c) {
+	private final Shape getPreviousShape(int r, int c) {
 		for(int i = 0; i < shapeList.size(); i++) {
 			if(shapeList.get(i).row == r && shapeList.get(i).col == c) {
-				//return shapeList.get(i);
+				Shape s = shapeList.get(i).shape;
+				shapeList.remove(i);
+				return s;
 			}
 		}
 		return null;

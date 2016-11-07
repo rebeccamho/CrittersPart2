@@ -20,6 +20,7 @@
 package assignment5;
 
 import assignment5.Critter.CritterShape;
+import javafx.scene.paint.Color;
 
 public class Critter3 extends Critter {
 
@@ -37,7 +38,15 @@ public class Critter3 extends Critter {
 	
 	@Override	
 	public CritterShape viewShape() {
-		return Critter.CritterShape.SQUARE; 
+		return Critter.CritterShape.TRIANGLE; 
+	}
+	
+	public Color viewOutlineColor() {
+		return Color.YELLOW;
+	}
+	
+	public Color viewFillColor() {
+		return Color.LIGHTYELLOW;
 	}
 	
 	@Override

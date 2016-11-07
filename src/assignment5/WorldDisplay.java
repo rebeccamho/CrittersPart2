@@ -1,5 +1,7 @@
 package assignment5;
 
+import java.util.ArrayList;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -12,8 +14,11 @@ import javafx.scene.shape.*;
 
 
 public class WorldDisplay extends Stage {
+	
 	static GridPane grid = new GridPane();
 	Label x = new Label("Second stage");
+	
+	ArrayList<ShapeGrid> shapeList = new ArrayList<ShapeGrid>();
 	
 	int rows = Params.world_height;
 	int cols = Params.world_width;
@@ -54,16 +59,18 @@ public class WorldDisplay extends Stage {
 					Critter crit = Critter.worldLists.get(index).get(0);
 					Critter.CritterShape sCrit = crit.viewShape();
 					Shape s = getShape(sCrit); 
-					
+					ShapeGrid sg = new ShapeGrid(s,c,r);
+					shapeList.add(sg);
 					s.setFill(crit.viewFillColor());
 					s.setStroke(crit.viewOutlineColor());
-					this.grid.add(s, c, r); // add the shape to the grid.
-				} 
+					grid.add(s, c, r); // add the shape to the grid.
+				} else {
+//					grid.getChildren().remove(o)
+				}
 			}
 		}
 		this.show();
 	}
-	
 	
 	private final int convertCoordToIndex(int r, int c) {
 		int index = r*Params.world_width + c;
@@ -71,11 +78,23 @@ public class WorldDisplay extends Stage {
 	}
 	
 	private final Shape getShape(Critter.CritterShape critShape) {
-//		if(sCrit.equals(Critter.CritterShape.SQUARE)) {
-//			s = new Rectangle(colLen,rowLen);
-//		} else if {
-//			
-//		}
+		Shape s = null;
+		if(critShape.equals(Critter.CritterShape.SQUARE)) {
+			s = new Rectangle(colLen,rowLen);
+		} else if(critShape.equals(Critter.CritterShape.CIRCLE)) {
+			s = new Circle(Math.min(colLen,rowLen)/2);
+		} else if(critShape.equals(Critter.CritterShape.DIAMOND)) {
+			//s = 
+		}
+		return s;
+	}
+	
+	private final Shape cellWasFilled(int r, int c) {
+		for(int i = 0; i < shapeList.size(); i++) {
+			if(shapeList.get(i).row == r && shapeList.get(i).col == c) {
+				//return shapeList.get(i);
+			}
+		}
 		return null;
 	}
 

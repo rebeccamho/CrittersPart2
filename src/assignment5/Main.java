@@ -15,6 +15,7 @@ package assignment5;
 //import java.awt.Font;
 import java.lang.String;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -37,6 +39,7 @@ public class Main extends Application {
 	static GridPane grid = new GridPane();
 	WorldDisplay worldStage; 
 	boolean worldStageInit = false; 
+	private double speed;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -245,6 +248,66 @@ public class Main extends Application {
 	        grid.add(quitBtn, 10, 50);
 	        
 	        
+	        /** animation */
+	        /*
+	        AnimationTimer timer = new AnimationTimer() { 
+	            private long lastUpdate = 0 ;
+	            @Override
+	            public void handle(long now) {
+	                    if (now - lastUpdate >= speed) {
+	                    	// TODO perform what's needed here
+	                    	Critter.worldTimeStep();
+	                    	if(!worldStageInit) {
+	            				worldStage = new WorldDisplay();
+	            				worldStageInit = true; 
+	            			} else {
+	            				worldStage.update();
+	            			}
+	                    	
+	                        lastUpdate = now ;
+	                    }
+	            }
+	        };
+	        
+	        Label animate = new Label("Critter Animation");
+			grid.add(animate, 0, 70);
+			Label animateSpeed = new Label("Animation Speed:");
+			grid.add(animateSpeed, 0, 71);
+	        Slider slider = new Slider();
+	        slider.setMin(0);
+	        slider.setMax(100);
+	        slider.setValue(1);
+	        slider.setShowTickLabels(true);
+	        slider.setShowTickMarks(true);
+	        slider.setMajorTickUnit(50);
+	        slider.setMinorTickCount(5);
+	        slider.setBlockIncrement(10);
+	        grid.add(slider, 1, 71);
+	        Button animateBtn = new Button();
+	        animateBtn.setText("Start Animation");
+	        Button stopAnimateBtn = new Button();
+	        stopAnimateBtn.setText("Stop Animation");
+	        stopAnimateBtn.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	timer.stop();
+	            	if(grid.getChildren().contains(stopAnimateBtn)) {
+	            		grid.getChildren().remove(stopAnimateBtn);
+	            	}
+	            }
+	        });
+	        animateBtn.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	double sliderVal = slider.getValue();
+	            	speed = (500_000_000 / sliderVal); // set speed of animation
+	            	timer.start();
+	            	 grid.add(stopAnimateBtn, 1, 72);
+	            }
+	        });
+	        grid.add(animateBtn, 1, 72);
+	        */
+	           
 	        primaryStage.show();
 	        
 		} catch(Exception e) {

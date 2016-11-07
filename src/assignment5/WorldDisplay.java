@@ -63,7 +63,7 @@ public class WorldDisplay extends Stage {
 				if(Critter.worldLists.get(index).size() > 0) {
 					Critter crit = Critter.worldLists.get(index).get(0);
 					Critter.CritterShape sCrit = crit.viewShape();
-					Shape s = getShape(sCrit,c,r); 
+					Shape s = getShape(sCrit); 
 					ShapeGrid sg = new ShapeGrid(s,c,r);
 					shapeList.add(sg);
 					s.setFill(crit.viewFillColor());
@@ -80,18 +80,27 @@ public class WorldDisplay extends Stage {
 		return index;
 	}
 	
-	private final Shape getShape(Critter.CritterShape critShape, int c, int r) {
+	private final Shape getShape(Critter.CritterShape critShape) {
 		Shape s = null;
+		double cLen = (double) colLen-1; 
+		double rLen = (double) rowLen-1;
 		if(critShape.equals(Critter.CritterShape.CIRCLE)) {
 			s = new Circle(Math.min(colLen-1,rowLen-1)/2);
 		} else if(critShape.equals(Critter.CritterShape.SQUARE)) {
 			s = new Rectangle(colLen-1,rowLen-1);
 		} else if(critShape.equals(Critter.CritterShape.TRIANGLE)) {
 			Polygon p = new Polygon();
-			double cLen = (double) colLen-1; 
-			double rLen = (double) rowLen-1;
 			p.getPoints().addAll(0.0, rLen, cLen/2, 0.0, cLen, rLen);
 			s = p; 
+		} else if(critShape.equals(Critter.CritterShape.DIAMOND)) {
+			Polygon p = new Polygon(); 
+			p.getPoints().addAll(cLen/2, 0.0, cLen, rLen/2, cLen/2, rLen, 0.0, rLen/2);
+			s = p;
+		} else if(critShape.equals(Critter.CritterShape.STAR)) {
+			Polygon p = new Polygon(); 
+			p.getPoints().addAll(cLen/2, 0.0, cLen*7/10, rLen*1/3, cLen, rLen*1/3, cLen*3/4, rLen*3/5, cLen*9/10, rLen, cLen/2, rLen*8/10, cLen*1/10, rLen, cLen*1/4, rLen*3/5, 0.0, rLen*1/3, cLen*3/10, rLen*1/3);
+			//p.getPoints().addAll(cLen/2, 0.0, 0.0, rLen, cLen, rLen/3, 0.0, rLen/3, cLen, rLen);
+			s = p;
 		}
 		return s;
 	}

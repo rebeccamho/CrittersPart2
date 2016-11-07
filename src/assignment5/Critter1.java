@@ -34,7 +34,7 @@ public class Critter1 extends Critter {
 	
 	@Override
 	public CritterShape viewShape() {
-		return Critter.CritterShape.SQUARE; 
+		return Critter.CritterShape.STAR; 
 	}
 	
 	public Color viewOutlineColor() {

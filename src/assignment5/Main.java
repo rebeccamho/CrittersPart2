@@ -12,17 +12,16 @@
 
 package assignment5;
 
-//import java.awt.Font;
 import java.lang.String;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -34,6 +33,9 @@ import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.util.*;
+
+import assignment5.Critter;
+import assignment5.InvalidCritterException;
 
 public class Main extends Application {
 	static GridPane grid = new GridPane();
@@ -50,7 +52,7 @@ public class Main extends Application {
 			grid.setHgap(5);
 			grid.setVgap(2);
 			grid.setPadding(new Insets(10, 10, 10, 10));
-			Scene scene = new Scene(grid, 500, 500);
+			Scene scene = new Scene(grid, 550, 550);
 			primaryStage.setScene(scene);
 			
 			
@@ -64,6 +66,7 @@ public class Main extends Application {
 			Label critterName = new Label("Critter Name:");
 			grid.add(critterName, 0, 11);
 			TextField nameField = new TextField();
+			nameField.setMaxWidth(100);
 			grid.add(nameField, 1, 11);
 			Label critterNum = new Label("Number:");
 			grid.add(critterNum, 0, 12);
@@ -75,24 +78,29 @@ public class Main extends Application {
 	        Text wrongInput = new Text("Invalid Number!");
 			wrongInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongInput.setFill(Color.RED);
+			Text wrongCritterType = new Text("Invalid Critter Type!");
+			wrongCritterType.setFont(Font.font("Arial",FontWeight.NORMAL,12));
+			wrongCritterType.setFill(Color.RED);
 			
 	        makeBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
-	            	if(grid.getChildren().contains(wrongInput)) {
+	            	if(grid.getChildren().contains(wrongInput)) { // remove wrong number text
 	            		grid.getChildren().remove(wrongInput);
 	            	}
+	            	if(grid.getChildren().contains(wrongCritterType)) { // remove wrong critter text
+	            		grid.getChildren().remove(wrongCritterType);
+	            	}
 	            	String name = null;
-	            	String num;
+	            	String num = null;
 	            	int numInt = 0;
-	            	if((nameField.getText() != null && !nameField.getText().isEmpty())) {
+	            	if((nameField.getText() != null && !nameField.getText().isEmpty())) { // get Critter name
 	            		name = nameField.getText();
-	            		// TODO check for invalid name
+	            		
 	            	}
 	            	if((numField.getText() != null && !numField.getText().isEmpty())) {
 	            		num = numField.getText();
 	            		num = num.trim();
-	            		// need a try block for invalid number
 	            		try{
 	            			numInt = Integer.parseInt(num);
 	            		} catch(NumberFormatException e) {
@@ -100,7 +108,23 @@ public class Main extends Application {
 	            		}
 	            	}
 	            	try {
-	            		for(int i = 0; i < numInt; i++) {
+	            		if(num == null) { // no number was specified
+	            			numInt = 1;
+	            		}
+	            		String myPackage = Critter.class.getPackage().toString().split(" ")[1];
+         				List<Critter> critters = Critter.getInstances(name);
+         				String critter_class_name = myPackage + "." + name;
+         			         				
+         				Critter testCritter; 
+         				Class<?> testClass; 
+         				try { // this try block is to determine whether the critter is valid or not, regardless of number input
+             				testCritter = (Critter) Class.forName(critter_class_name).newInstance();
+             				testClass = testCritter.getClass();
+         				} catch(InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+         					throw new InvalidCritterException(critter_class_name);
+         				} 
+         	
+	            		for(int i = 0; i < numInt; i++) { // add Critters to population and world
 	            			Critter.makeCritter(name);
 	            			if(!worldStageInit) {
 	            				worldStage = new WorldDisplay();
@@ -110,7 +134,7 @@ public class Main extends Application {
 	            			}
 	            		}
 	            	} catch(InvalidCritterException e) { 
-	            		System.out.println(e.toString());
+	            		grid.add(wrongCritterType,0,14);
 	            	}
 	            }
 	        });
@@ -157,17 +181,19 @@ public class Main extends Application {
 	            	if(grid.getChildren().contains(wrongStepInput)) {
 	            		grid.getChildren().remove(wrongStepInput);
 	            	}
-	            	String num;
-	            	int numInt = 1;
+	            	String num = null;
+	            	int numInt = 0;
 	            	if((stepField.getText() != null && !stepField.getText().isEmpty())) {
 	            		num = stepField.getText();
 	            		num = num.trim();
-	            		// need a try block for invalid number
 	            		try{
 	            			numInt = Integer.parseInt(num);
 	            		} catch(NumberFormatException e) {
 	            			grid.add(wrongStepInput, 1, 33);
 	            		}
+	            	}
+	            	if(num == null) {
+	            		numInt = 1;
 	            	}
 	            	for(int i = 0; i < numInt; i++) {
 	            		Critter.worldTimeStep();
@@ -185,15 +211,56 @@ public class Main extends Application {
 	        /** stats */
 	        Label stats = new Label("Show Statistics:");
 			grid.add(stats, 10, 30);
+		
+			Label statsCritterName = new Label("Critter Name:");
+			grid.add(statsCritterName, 10, 31);
+			TextField statsNameField = new TextField();
+			statsNameField.setMaxWidth(100);
+			grid.add(statsNameField, 11, 31);
 	        Button statsBtn = new Button();
-	        statsBtn.setText("Run");
+	        statsBtn.setText("Run Stats");
+	        Text wrongStatsInput = new Text("Invalid Critter Type!");
+			wrongStatsInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
+			wrongStatsInput.setFill(Color.RED);
 	        
 	        statsBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
+	            	if(grid.getChildren().contains(wrongStatsInput)) { // remove wrong critter text
+	            		grid.getChildren().remove(wrongStatsInput);
+	            	}
+	            	String name = null;
+	            	String num = null;
+	            	int numInt = 0;
+	            	if((nameField.getText() != null && !nameField.getText().isEmpty())) { // get Critter name
+	            		name = nameField.getText();
+	            		
+	            	}
+	            	try {
+	            		String myPackage = Critter.class.getPackage().toString().split(" ")[1];
+         				List<Critter> critters = Critter.getInstances(name);
+         				String critter_class_name = myPackage + "." + name;
+         			         				
+         				Critter testCritter; 
+         				Class<?> testClass; 
+         				try {
+             				testCritter = (Critter) Class.forName(critter_class_name).newInstance();
+             				testClass = testCritter.getClass();
+         				} catch(InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+         					throw new InvalidCritterException(critter_class_name);
+         				} 
+         				Method statsMethod = testClass.getMethod("runStats", List.class);
+         				statsMethod.invoke(testClass, critters);
+					
+         			} catch(InvalidCritterException | NoSuchMethodException | SecurityException | 
+         					IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
+         				//System.out.println(e.toString());
+         				grid.add(wrongStatsInput, 10, 33);
+					
+         			}
 	            }
 	        });
-	        grid.add(statsBtn, 10, 31);
+	        grid.add(statsBtn, 10, 32);
 	        
 	        /** seed */
 			Label seed = new Label("Set Seed");
@@ -208,10 +275,28 @@ public class Main extends Application {
 	        Text wrongSeedInput = new Text("Invalid Number!");
 			wrongSeedInput.setFont(Font.font("Arial",FontWeight.NORMAL,12));
 			wrongSeedInput.setFill(Color.RED);
-			//grid.getChildren().addAll(welcome,make);
-//			WorldDisplay worldStage = new WorldDisplay(); // this will only happen if the user chooses displayWorld... added later
-//			primaryStage.show();
-//			worldStage.update();
+			
+	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	if(grid.getChildren().contains(wrongSeedInput)) {
+	            		grid.getChildren().remove(wrongSeedInput);
+	            	}
+	            	String num = null;
+	            	int numInt = 0;
+	            	if((seedField.getText() != null && !seedField.getText().isEmpty())) {
+	            		num = seedField.getText();
+	            		num = num.trim();
+	            		try{
+	            			numInt = Integer.parseInt(num);
+	            			Critter.setSeed(numInt);
+	            		} catch(NumberFormatException e) {
+	            			grid.add(wrongSeedInput, 1, 52);
+	            		}
+	            	}
+	            }
+	        });
+	            	
 
 			
 	        seedBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -303,6 +388,7 @@ public class Main extends Application {
 	            	speed = (2*2000_000_000 / sliderVal); // set speed of animation
 	            	timer.start();
 	            	grid.add(stopAnimateBtn, 1, 72);
+	            	// TODO disable other buttons while this is happening
 	            }
 	        });
 	        grid.add(startAnimateBtn, 1, 72);

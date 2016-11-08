@@ -64,7 +64,8 @@ public class Main extends Application {
 			grid.setPadding(new Insets(10, 10, 10, 10));
 			Scene scene = new Scene(grid, 550, 550);
 			primaryStage.setScene(scene);
-			
+			primaryStage.setTitle("Critter Control Stage");
+
 			
 			Text welcome = new Text("Welcome to Critters!");
 			welcome.setFont(Font.font("Arial",FontWeight.BOLD,14));
@@ -175,13 +176,13 @@ public class Main extends Application {
 	            	} else {
 	            		worldStage.update();
 	            	}
-	            	if(!statsStageInit) {
-        				statsStage = new StatsDisplay();
-        				statsStageInit = true; 
-        				statsStage.update(statsCritters);
-        			} else {
-        				statsStage.update(statsCritters);
-        			}
+//	            	if(!statsStageInit) {
+//        				statsStage = new StatsDisplay();
+//        				statsStageInit = true; 
+//        				statsStage.update(statsCritters);
+//        			} else {
+//        				statsStage.update(statsCritters);
+//        			}
 	            	
 	            }
 	        });
@@ -403,6 +404,7 @@ public class Main extends Application {
 	            	stepBtn.setDisable(false);
 	            	statsBtn.setDisable(false);
 	            	seedBtn.setDisable(false);
+	            	slider.setDisable(false);
 	            }
 	        });
 	        startAnimateBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -418,6 +420,7 @@ public class Main extends Application {
 	            	stepBtn.setDisable(true);
 	            	statsBtn.setDisable(true);
 	            	seedBtn.setDisable(true);
+	            	slider.setDisable(true);
 	            }
 	        });
 	        grid.add(startAnimateBtn, 1, 72);

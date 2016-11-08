@@ -51,8 +51,8 @@ public class Critter1 extends Critter {
 			String critterName = look(dir,true);
 			if(critterName == null || critterName == "@") {
 				run(dir); 
+				dir = Critter.getRandomInt(8);
 			}
-			dir = Critter.getRandomInt(8);
 			return false;
 		}
 		
@@ -68,14 +68,14 @@ public class Critter1 extends Critter {
 				String critterName = look(dir,false);
 				if(critterName == null || critterName == "@") {
 					walk(dir);
+					dir = Critter.getRandomInt(8);
 				}
-				dir = Critter.getRandomInt(8);
 			} else if(move == 1) {
 				String critterName = look(dir,true);
 				if(critterName == null || critterName == "@") {
 					run(dir); 
+					dir = Critter.getRandomInt(8);
 				}
-				dir = Critter.getRandomInt(8);
 			}
 		}
 		

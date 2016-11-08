@@ -58,14 +58,15 @@ public class Critter2 extends Critter {
 		
 		/* runs if it has not already moved and has enough energy */ 
 		else if(getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost) && hasMoved() == false) {
-			run(dir);
-			dir = Critter.getRandomInt(8);
-			return false;
-		}
-		
+			String critterName = look(dir,true);
+			if(critterName == null || critterName == "@") {
+				run(dir); 
+				dir = Critter.getRandomInt(8);
+				return false;
+			}
+		}		
 		/* otherwise, tries to fight */ 
-		else 
-			return true; 
+		return true; 
 	
 	}	
 

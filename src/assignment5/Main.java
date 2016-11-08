@@ -45,8 +45,6 @@ public class Main extends Application {
     static PrintStream old = System.out;	// if you want to restore output to console
 	
 	static GridPane grid = new GridPane();
-	WorldDisplay worldStage; 
-	boolean worldStageInit = false; 
 	StatsDisplay statsStage;
 	boolean statsStageInit = false;
 	private double speed;
@@ -137,23 +135,18 @@ public class Main extends Application {
          	
 	            		for(int i = 0; i < numInt; i++) { // add Critters to population and world
 	            			Critter.makeCritter(name);
-	            			if(!worldStageInit) {
-	            				worldStage = new WorldDisplay();
-	            				worldStageInit = true; 
-	            			} else {
-	            				worldStage.update();
-	            			}
-	            			if(!statsCritters.contains(name)) { // add Critter to stats list
-	            				statsCritters.add(name);
-	            			}
-	            			if(!statsStageInit) {
-	            				statsStage = new StatsDisplay();
-	            				statsStageInit = true; 
-	            				statsStage.update(statsCritters);
-	            			} else {
-	            				statsStage.update(statsCritters);
-	            			}
 	            		}
+            			Critter.displayWorld();
+            			if(!statsCritters.contains(name)) { // add Critter to stats list
+            				statsCritters.add(name);
+            			}
+            			if(!statsStageInit) {
+            				statsStage = new StatsDisplay();
+            				statsStageInit = true; 
+            				statsStage.update(statsCritters);
+            			} else {
+            				statsStage.update(statsCritters);
+            			}
 	            	} catch(InvalidCritterException e) { 
 	            		grid.add(wrongCritterType,0,14);
 	            	}
@@ -170,20 +163,7 @@ public class Main extends Application {
 	        displayBtn.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent event) {
-	            	if(!worldStageInit) {
-	            		worldStage = new WorldDisplay();	
-	            		worldStageInit = true;
-	            	} else {
-	            		worldStage.update();
-	            	}
-//	            	if(!statsStageInit) {
-//        				statsStage = new StatsDisplay();
-//        				statsStageInit = true; 
-//        				statsStage.update(statsCritters);
-//        			} else {
-//        				statsStage.update(statsCritters);
-//        			}
-	            	
+	            	Critter.displayWorld();
 	            }
 	        });
 	        grid.add(displayBtn, 10, 11);
@@ -225,12 +205,7 @@ public class Main extends Application {
 	            	}
 	            	for(int i = 0; i < numInt; i++) {
 	            		Critter.worldTimeStep();
-		            	if(!worldStageInit) {
-		            		worldStage = new WorldDisplay();	
-		            		worldStageInit = true;
-		            	} else {
-		            		worldStage.update();
-		            	}
+	            		Critter.displayWorld();
 		            	if(!statsStageInit) {
             				statsStage = new StatsDisplay();
             				statsStageInit = true; 
@@ -354,14 +329,8 @@ public class Main extends Application {
 	            @Override
 	            public void handle(long now) {
 	                    if (now - lastUpdate >= speed) {
-	                    	// TODO perform what's needed here
 	                    	Critter.worldTimeStep();
-	                    	if(!worldStageInit) {
-	            				worldStage = new WorldDisplay();
-	            				worldStageInit = true; 
-	            			} else {
-	            				worldStage.update();
-	            			}
+	                    	Critter.displayWorld();
 	                    	if(!statsStageInit) {
 	            				statsStage = new StatsDisplay();
 	            				statsStageInit = true; 

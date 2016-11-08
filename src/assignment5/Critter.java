@@ -54,6 +54,10 @@ public abstract class Critter {
 	
 	public abstract CritterShape viewShape(); 
 	
+	private static WorldDisplay worldStage; 
+	private static boolean worldStageInit = false; 
+
+	
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
@@ -63,6 +67,7 @@ public abstract class Critter {
 	private boolean movedThisTurn;
 	private boolean inAFight;
 	private boolean looking; 
+	
 	
 	
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
@@ -591,28 +596,12 @@ public abstract class Critter {
 	 * This method prints the world.
 	 */
 	public static void displayWorld() {
-		System.out.print("+"); 
-		for(int c = 0; c < Params.world_width; c++) { 
-			System.out.print("-");
+		if(!worldStageInit) {
+			worldStage = new WorldDisplay();
+			worldStageInit = true; 
+		} else {
+			worldStage.update();
 		}
-		System.out.println("+"); 
-		for(int r = 0; r < Params.world_height; r++) { 
-			System.out.print("|");
-			for(int c = 0; c < Params.world_width; c++) {
-				int index = convertCoordToIndex(r,c);
-				if(worldLists.get(index).size() > 0) {
-					System.out.print(worldLists.get(index).get(0));
-				} else {
-					System.out.print(" ");
-				}
-			}
-			System.out.println("|");
-		}
-		System.out.print("+"); 
-		for(int c = 0; c < Params.world_width; c++) { 
-			System.out.print("-");
-		}
-		System.out.println("+");
 	}
 	
 	private final int convertCoordToIndex() {

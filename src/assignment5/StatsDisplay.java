@@ -35,7 +35,7 @@ public class StatsDisplay extends Stage {
 		grid.setHgap(5);
 		grid.setVgap(2);
 		grid.setPadding(new Insets(10, 10, 10, 10));
-		Scene scene = new Scene(grid, 600, 300);
+		Scene scene = new Scene(grid, 800, 300);
 		this.setScene(scene);
 		this.setTitle("Critter Statistics Stage");
 		

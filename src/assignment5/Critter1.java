@@ -38,11 +38,15 @@ public class Critter1 extends Critter {
 	}
 	
 	public Color viewOutlineColor() {
-		return Color.BLUE;
+		return viewColor();
 	}
 	
 	public Color viewFillColor() {
-		return Color.AQUA;
+		return viewColor();
+	}
+	
+	public Color viewColor() {
+		return Color.ROYALBLUE;
 	}
 	
 	public boolean fight(String not_used) { 

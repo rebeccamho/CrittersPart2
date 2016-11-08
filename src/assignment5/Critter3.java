@@ -42,11 +42,15 @@ public class Critter3 extends Critter {
 	}
 	
 	public Color viewOutlineColor() {
-		return Color.YELLOW;
+		return viewColor();
 	}
 	
 	public Color viewFillColor() {
-		return Color.LIGHTYELLOW;
+		return viewColor();
+	}
+	
+	public Color viewColor() {
+		return Color.YELLOW;
 	}
 	
 	@Override

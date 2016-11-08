@@ -57,7 +57,7 @@ public class Critter2 extends Critter {
 		}
 		
 		/* runs if it has not already moved and has enough energy */ 
-		else if(this.getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost)) {
+		else if(getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost) && hasMoved() == false) {
 			run(dir);
 			dir = Critter.getRandomInt(8);
 			return false;
@@ -72,7 +72,7 @@ public class Critter2 extends Critter {
 	@Override
 	public void doTimeStep() {
 		/* runs if has enough energy and only walks in cardinal directions (up, down, left, right) */
-		if((this.getEnergy() > Params.rest_energy_cost + Params.run_energy_cost) && (dir % 2) == 0) {
+		if((getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost)) && (dir % 2) == 0) {
 			walk(dir); 
 			
 			/* pick a new direction based on our genes */
@@ -86,6 +86,7 @@ public class Critter2 extends Critter {
 			
 			dir = (dir + turn) % 8;
 		} else { 
+			dir = (dir + 1) % 8;
 		}
 		
 		/* reproduces if has enough energy and has not moved during turn */

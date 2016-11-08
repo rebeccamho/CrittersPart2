@@ -42,7 +42,7 @@ public class WorldDisplay extends Stage {
 	
 	WorldDisplay(){
 	    
-		this.setTitle("Critter World Grid -- Second Stage");
+		this.setTitle("Critter World Grid Stage");
 		grid.setGridLinesVisible(false);
 
 

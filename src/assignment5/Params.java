@@ -16,7 +16,7 @@ public class Params {
 	public static int world_height = 100;
 	public static int walk_energy_cost = 2;
 	public static int run_energy_cost = 5;
-	public static int rest_energy_cost = 0;
+	public static int rest_energy_cost = 1;
 	public static int min_reproduce_energy = 100;
 	public static int refresh_algae_count = 5;
 

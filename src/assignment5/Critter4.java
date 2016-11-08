@@ -52,7 +52,10 @@ public class Critter4 extends Critter {
 	
 	@Override
 	public void doTimeStep() {
-		run(dir);
+		String critterName = look(dir,true);
+		if(critterName == null || critterName == "@") {
+			run(dir); 
+		}
 		
 		int reproduce = Critter.getRandomInt(4); // 25% chance Critter4 will reproduce
 		if (reproduce == 1) {

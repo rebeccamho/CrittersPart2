@@ -46,9 +46,12 @@ public class Critter1 extends Critter {
 	}
 	
 	public boolean fight(String not_used) { 
-		/* runs if it has not already moved and has enough energy */ 
-		if(getEnergy() > (Params.rest_energy_cost + Params.run_energy_cost) && hasMoved() == false) {
-			run(dir);
+		/* runs if it has not already moved and new location has Algae or no other Critter*/ 
+		if(hasMoved() == false) {
+			String critterName = look(dir,true);
+			if(critterName == null || critterName == "@") {
+				run(dir); 
+			}
 			dir = Critter.getRandomInt(8);
 			return false;
 		}

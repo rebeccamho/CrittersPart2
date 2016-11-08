@@ -162,7 +162,7 @@ public class Main extends Application {
 	        grid.add(makeBtn, 1, 13);
 			
 			/** show */
-	        Label show = new Label("Display World:");
+	        Label show = new Label("Display World");
 			grid.add(show, 10, 10);
 	        Button displayBtn = new Button();
 	        displayBtn.setText("Show Critters");
@@ -244,7 +244,7 @@ public class Main extends Application {
 	        grid.add(stepBtn, 1, 32);
 			
 	        /** stats */
-	        Label stats = new Label("Show Statistics:");
+	        Label stats = new Label("Show Statistics");
 			grid.add(stats, 10, 30);
 			/*
 			Label statsCritterName = new Label("Critter Name:");
